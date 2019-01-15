@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.Random;
+import java.util.stream.IntStream;
 
 public class BubbleSort {
     public void sort(int[] a) {
@@ -14,10 +16,29 @@ public class BubbleSort {
     }
 
     public static void main(String[] args) {
-        var bubbleSort = new BubbleSort();
-        var array = new int[] {9,7,8,5,6,3,4,2,3,1,0};
-        System.out.println("Sorting an array: " + Arrays.toString(array));
-        bubbleSort.sort(array);
-        System.out.println("Sorted array: " + Arrays.toString(array));
+        System.out.println("Bubble sort test");
+        System.out.println("small random");
+        testArraySort(new Random().ints(50, 0, 50).toArray());
+        System.out.println("small sorted");
+        testArraySort(IntStream.range(0, 50).toArray());
+        System.out.println("medium random");
+        testArraySort(new Random().ints(1000, 0, 50).toArray());
+        System.out.println("medium sorted");
+        testArraySort(IntStream.range(0, 1000).toArray());
+        System.out.println("big random");
+        testArraySort(new Random().ints(500_000, 0, 50).toArray());
+        System.out.println("big sorted");
+        testArraySort(IntStream.range(0, 500_000).toArray());
+    }
+
+    private static void testArraySort(int[] a) {
+        var sorter = new BubbleSort();
+        long time = System.currentTimeMillis();
+        sorter.sort(a);
+        time = System.currentTimeMillis() - time;
+        System.out.println("Sorted in " + time + "ms");
+        int[] sorted = Arrays.copyOf(a, a.length);
+        System.out.println("Validation: "
+                + (Arrays.equals(a, sorted) ? "SUCCESS" : "FAILED"));
     }
 }
