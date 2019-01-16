@@ -4,3 +4,12 @@ matrix:
           jdk: openjdk11
           script:
               - bash scripts/java_run.sh
+
+        - language: java
+          sudo: required
+          dist: xenial
+          jdk: openjdk11
+          before_install:
+              - sudo snap install --classic kotlin
+          script:
+              - bash scripts/kotlin_run.sh
