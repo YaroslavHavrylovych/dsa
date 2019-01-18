@@ -13,3 +13,9 @@ matrix:
               - sudo snap install --classic kotlin
           script:
               - bash scripts/kotlin_run.sh
+
+        - language: haskell
+          dist: xenial
+          ghc: "8.2.2"
+          script:
+              - bash scripts/haskell_run.sh

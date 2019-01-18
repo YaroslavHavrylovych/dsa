@@ -27,9 +27,9 @@ main = do
         putStrLn "medium sorted"
         testArraySort [x | x <- [1..1000]]
         putStrLn "big random"
-        testArraySort (take 100000 $ randomRs(1,100) (mkStdGen 14) :: [Int])
+        testArraySort (take 10000 $ randomRs(1,100) (mkStdGen 14) :: [Int])
         putStrLn "big sorted"
-        testArraySort [x | x <- [1..100000]]
+        testArraySort [x | x <- [1..10000]]
 
 testArraySort :: (Show a, Ord a) => [a] -> IO()
 testArraySort a = do
