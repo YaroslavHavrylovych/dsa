@@ -16,6 +16,6 @@ matrix:
 
         - language: haskell
           dist: xenial
-          ghc: "8.2.2"
+          ghc: "8.2"
           script:
               - bash scripts/haskell_run.sh
