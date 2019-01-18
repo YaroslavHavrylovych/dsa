@@ -15,7 +15,6 @@ matrix:
               - bash scripts/kotlin_run.sh
 
         - language: haskell
-          dist: xenial
           ghc: "8.2"
           script:
               - bash scripts/haskell_run.sh
