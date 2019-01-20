@@ -16,5 +16,7 @@ matrix:
 
         - language: haskell
           ghc: "8.2"
+          install:
+              - echo "Skipping the default install script"
           script:
               - bash scripts/haskell_run.sh
