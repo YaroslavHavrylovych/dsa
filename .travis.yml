@@ -1,0 +1,22 @@
+matrix:
+    include:
+        - language: java
+          jdk: openjdk11
+          script:
+              - bash scripts/java_run.sh
+
+        - language: java
+          sudo: required
+          dist: xenial
+          jdk: openjdk11
+          before_install:
+              - sudo snap install --classic kotlin
+          script:
+              - bash scripts/kotlin_run.sh
+
+        - language: haskell
+          ghc: "8.2"
+          install:
+              - echo "Skipping the default install script"
+          script:
+              - bash scripts/haskell_run.sh
