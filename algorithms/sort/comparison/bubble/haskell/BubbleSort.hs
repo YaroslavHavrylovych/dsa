@@ -17,19 +17,26 @@ bubble (x1:x2:xs)
 bubble (x) = (x)
 
 main = do
+        putStrLn "------------------"
         putStrLn "Bubble sort test"
         putStrLn "small random"
         testArraySort (take 50 $ randomRs(1,100) (mkStdGen 11) :: [Int])
         putStrLn "small sorted"
         testArraySort [x | x <- [1..50]]
+        putStrLn "small sorted in reverse order"
+        testArraySort [x | x <- [50,49..1]]
         putStrLn "medium random"
         testArraySort (take 1000 $ randomRs(1,100) (mkStdGen 13) :: [Int])
         putStrLn "medium sorted"
         testArraySort [x | x <- [1..1000]]
+        putStrLn "medium sorted in reverse order"
+        testArraySort [x | x <- [1000,999..1]]
         putStrLn "big random"
         testArraySort (take 10000 $ randomRs(1,100) (mkStdGen 14) :: [Int])
         putStrLn "big sorted"
         testArraySort [x | x <- [1..10000]]
+        putStrLn "big sorted in reverse order"
+        testArraySort [x | x <- [10000,9999..1]]
 
 testArraySort :: (Show a, Ord a) => [a] -> IO()
 testArraySort a = do
