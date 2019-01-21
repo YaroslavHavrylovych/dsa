@@ -62,6 +62,7 @@ public class CocktailShaker {
         time = System.currentTimeMillis() - time;
         System.out.println("Sorted " + a.length + " items in " + time + "ms");
         int[] sorted = Arrays.copyOf(a, a.length);
+        Arrays.sort(sorted);
         System.out.println("Validation: "
                 + (Arrays.equals(a, sorted) ? "SUCCESS" : "FAILED"));
     }

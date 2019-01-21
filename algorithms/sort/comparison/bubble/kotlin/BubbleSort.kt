@@ -43,6 +43,7 @@ fun testArraySort(a: IntArray) {
     time = System.currentTimeMillis() - time
     println("Sorted " + a.size + " items in " + time + "ms")
     val sorted = Arrays.copyOf(a, a.size)
+    Arrays.sort(sorted)
     println("Validation: " +
         if(Arrays.equals(a, sorted)) "SUCCESS" else "FAILED")
 }
