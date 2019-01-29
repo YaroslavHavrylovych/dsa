@@ -19,4 +19,5 @@ matrix:
           install:
               - echo "Skipping the default install script"
           script:
+              - cabal install random
               - bash scripts/haskell_run.sh

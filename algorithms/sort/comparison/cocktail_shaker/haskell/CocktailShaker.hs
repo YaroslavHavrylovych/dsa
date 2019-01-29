@@ -3,22 +3,18 @@ import Data.Time.Clock.POSIX (getPOSIXTime)
 import System.Random
 
 chsort :: (Show a, Ord a) => [a] -> [a]
-chsort a = bounded_bubble a 0 (length a) True
+chsort a = bounded_bubble a
 
-bounded_bubble :: (Ord a) => [a] -> Int -> Int -> Bool -> [a]
-bounded_bubble a i n False = a
-bounded_bubble a i n _ 
-    | n <= i = a
+bounded_bubble :: (Ord a) => [a] -> [a]
+bounded_bubble a
     | not swapped_normal = a
-    | not swapped_reverse = pre ++ a1 ++ post
-    | otherwise = bounded_bubble (pre ++ a2 ++ post) (i+1) (n-1) True
-    where toSort = (drop i . take n $ a)
-          toSortLn = length toSort
-          (swapped_normal, a1) = bubble toSort False
-          (swapped_reverse, a2) = reverse_bubble (take (toSortLn - 2) $ a1) (last . init $ a1) (last $ a1) [] False
-          pre = take i a
-          post = drop n a
-        
+    | not swapped_reverse = a1
+    | otherwise = [hd] ++ (bounded_bubble b) ++ [lt]
+    where (swapped_normal, a1) = bubble a False
+          (swapped_reverse, a2) = reverse_bubble (take  (length a1 - 2) $ a1) (last . init $ a1) (last $ a1) [] False
+          hd = head a2
+          lt = last a2
+          b = ((drop 1 . take (length a2 - 1)) a2)
 
 bubble :: (Ord a) => [a] -> Bool -> (Bool, [a])
 bubble (x1:x2:xs) f
