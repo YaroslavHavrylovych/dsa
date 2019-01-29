@@ -3,41 +3,24 @@ import Data.Time.Clock.POSIX (getPOSIXTime)
 import System.Random
 
 chsort :: (Show a, Ord a) => [a] -> [a]
-chsort a = bounded_bubble a
-
-bounded_bubble :: (Ord a) => [a] -> [a]
-bounded_bubble a
+chsort a
     | not swapped_normal = a
     | not swapped_reverse = a1
-    | otherwise = [hd] ++ (bounded_bubble b) ++ [lt]
-    where (swapped_normal, a1) = bubble a False
-          (swapped_reverse, a2) = reverse_bubble (take  (length a1 - 2) $ a1) (last . init $ a1) (last $ a1) [] False
-          hd = head a2
-          lt = last a2
-          b = ((drop 1 . take (length a2 - 1)) a2)
+    | otherwise = chsort $ reverse a2
+    where (swapped_normal, a1) = bubble (<) a False
+          (swapped_reverse, a2) = bubble (>) (reverse a) False
 
-bubble :: (Ord a) => [a] -> Bool -> (Bool, [a])
-bubble (x1:x2:xs) f
-    | x2 < x1 = (b1, x2:xs1)
+bubble :: (Ord a) => (a -> a -> Bool) -> [a] -> Bool -> (Bool, [a])
+bubble op (x1:x2:xs) f
+    | op x2 x1 = (b1, x2:xs1)
     | otherwise = (b2, x1:xs2)
-    where (b1, xs1) = bubble (x1:xs) True
-          (b2, xs2) = bubble (x2:xs) f
-bubble (x) f = (f, x)
-
-reverse_bubble :: (Ord a) => [a] -> a -> a -> [a] -> Bool -> (Bool, [a])
-reverse_bubble pre x1 x2 post f =
-        if pre == [] then
-                           if x1 > x2  then (True, x2:x1:post)
-                                       else (f, x1:x2:post)
-        else if x1 > x2 
-                 then (reverse_bubble (init pre) (last pre)
-                                        x2 (x1:post) True)
-                 else (reverse_bubble (init pre) (last pre)
-                                        x1 (x2:post) f)
+    where (b1, xs1) = bubble op (x1:xs) True
+          (b2, xs2) = bubble op (x2:xs) f
+bubble op (x) f = (f, x)
 
 main = do
         putStrLn "------------------"
-        putStrLn "Bubble sort test"
+        putStrLn "Cocktail shaker sort test"
         putStrLn "small random"
         testArraySort (take 50 $ randomRs(1,100) (mkStdGen 11) :: [Int])
         putStrLn "small sorted"
@@ -61,7 +44,7 @@ testArraySort :: (Show a, Ord a) => [a] -> IO()
 testArraySort a = do
         let ms = round . (1000 *) <$> getPOSIXTime
         t1 <- ms
-        let sorted = chsort a
+        let sorted = cocktailSort a
         putStrLn $ "Sorted " ++ (show . length) sorted ++ " items"
         t2 <- ms
         putStrLn $ "Sorted in " ++ show (t2 - t1)
