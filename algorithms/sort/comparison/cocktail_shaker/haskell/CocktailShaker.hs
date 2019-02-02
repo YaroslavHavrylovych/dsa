@@ -5,18 +5,18 @@ import System.Random
 chsort :: (Show a, Ord a) => [a] -> [a]
 chsort a
     | not swapped_normal = a
-    | not swapped_reverse = a1
-    | otherwise = chsort $ reverse a2
-    where (swapped_normal, a1) = bubble (<) a False
-          (swapped_reverse, a2) = bubble (>) (reverse a) False
+    | not swapped_reverse = reverse a1
+    | otherwise = chsort $ a2
+    where (swapped_normal, a1) = passAndReverse (<) [] a False
+          (swapped_reverse, a2) = passAndReverse (>) [] a1 False
 
-bubble :: (Ord a) => (a -> a -> Bool) -> [a] -> Bool -> (Bool, [a])
-bubble op (x1:x2:xs) f
-    | op x2 x1 = (b1, x2:xs1)
-    | otherwise = (b2, x1:xs2)
-    where (b1, xs1) = bubble op (x1:xs) True
-          (b2, xs2) = bubble op (x2:xs) f
-bubble op (x) f = (f, x)
+passAndReverse :: (Ord a) => (a -> a -> Bool) -> [a] -> [a] -> Bool
+    -> (Bool, [a])
+passAndReverse op back (x1:x2:xs) f
+    | op x2 x1 = passAndReverse op (x2:back) (x1:xs) True
+    | otherwise = passAndReverse op (x1:back) (x2:xs) f
+passAndReverse op back [x] f = (f, x:back)
+passAndReverse op back [] f = (f, back)
 
 main = do
         putStrLn "------------------"
@@ -44,7 +44,7 @@ testArraySort :: (Show a, Ord a) => [a] -> IO()
 testArraySort a = do
         let ms = round . (1000 *) <$> getPOSIXTime
         t1 <- ms
-        let sorted = cocktailSort a
+        let sorted = chsort a
         putStrLn $ "Sorted " ++ (show . length) sorted ++ " items"
         t2 <- ms
         putStrLn $ "Sorted in " ++ show (t2 - t1)
