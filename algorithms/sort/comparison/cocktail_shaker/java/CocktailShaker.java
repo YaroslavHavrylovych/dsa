@@ -2,22 +2,38 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-public class BubbleSort {
+public class CocktailShaker {
     public void sort(int[] a) {
-        for(int i = 1; i < a.length; i++) {
-            for(int j = 0; j < a.length - i; j++) {
-                if(a[j] > a[j+1]) {
-                    var tmp = a[j];
-                    a[j] = a[j+1];
-                    a[j+1] = tmp;
+        var swaped = false;
+        int start = 0, end = a.length;
+        do {
+            swaped = false;
+            for(int i = start + 1; i < end; i++) {
+                if(a[i-1] > a[i]) {
+                    var tmp = a[i - 1];
+                    a[i-1] = a[i];
+                    a[i] = tmp;
+                    swaped = true;
                 }
             }
-        }
+            if(swaped) swaped = false; 
+            else break;
+            for(int i = end - 1; i > start; i--) {
+                if(a[i-1] > a[i]) {
+                    var tmp = a[i - 1];
+                    a[i-1] = a[i];
+                    a[i] = tmp;
+                    swaped = true;
+                }
+            }
+            start++;
+            end--;
+        } while(swaped);
     }
 
     public static void main(String[] args) {
         System.out.println("------------------");
-        System.out.println("Bubble sort test");
+        System.out.println("Cocktail shaker sort test");
         System.out.println("small random");
         testArraySort(new Random().ints(50, 0, 50).toArray());
         System.out.println("small sorted");
@@ -40,7 +56,7 @@ public class BubbleSort {
     }
 
     private static void testArraySort(int[] a) {
-        var sorter = new BubbleSort();
+        var sorter = new CocktailShaker();
         long time = System.currentTimeMillis();
         sorter.sort(a);
         time = System.currentTimeMillis() - time;

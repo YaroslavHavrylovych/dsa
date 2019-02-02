@@ -2,23 +2,25 @@ import qualified Data.List as D
 import Data.Time.Clock.POSIX (getPOSIXTime)
 import System.Random
 
-bsort :: (Show a, Ord a) => [a] -> [a]
-bsort a = counted_bubble a 0 (length a - 1)
+chsort :: (Show a, Ord a) => [a] -> [a]
+chsort a
+    | not swapped_normal = a
+    | not swapped_reverse = reverse a1
+    | otherwise = chsort $ a2
+    where (swapped_normal, a1) = passAndReverse (<) [] a False
+          (swapped_reverse, a2) = passAndReverse (>) [] a1 False
 
-counted_bubble :: (Ord a) => [a] -> Int -> Int -> [a]
-counted_bubble a i n
-    | i == n = a
-    | otherwise = counted_bubble (bubble a) (i+1) n
-
-bubble :: (Ord a) => [a] -> [a]
-bubble (x1:x2:xs)
-    | x1 < x2 = x1:bubble(x2:xs)
-    | otherwise = x2:bubble(x1:xs)
-bubble (x) = (x)
+passAndReverse :: (Ord a) => (a -> a -> Bool) -> [a] -> [a] -> Bool
+    -> (Bool, [a])
+passAndReverse op back (x1:x2:xs) f
+    | op x2 x1 = passAndReverse op (x2:back) (x1:xs) True
+    | otherwise = passAndReverse op (x1:back) (x2:xs) f
+passAndReverse op back [x] f = (f, x:back)
+passAndReverse op back [] f = (f, back)
 
 main = do
         putStrLn "------------------"
-        putStrLn "Bubble sort test"
+        putStrLn "Cocktail shaker sort test"
         putStrLn "small random"
         testArraySort (take 50 $ randomRs(1,100) (mkStdGen 11) :: [Int])
         putStrLn "small sorted"
@@ -42,7 +44,7 @@ testArraySort :: (Show a, Ord a) => [a] -> IO()
 testArraySort a = do
         let ms = round . (1000 *) <$> getPOSIXTime
         t1 <- ms
-        let sorted = bsort a
+        let sorted = chsort a
         putStrLn $ "Sorted " ++ (show . length) sorted ++ " items"
         t2 <- ms
         putStrLn $ "Sorted in " ++ show (t2 - t1)

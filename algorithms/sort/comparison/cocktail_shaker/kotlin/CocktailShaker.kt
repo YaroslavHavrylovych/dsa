@@ -3,20 +3,37 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 fun sort(a: IntArray) {
-    for(i in 1 until a.size) {
-        for(j in 0 until a.size - i) {
-            if(a[j] > a[j+1]) {
-                val tmp = a[j]
-                a[j] = a[j+1]
-                a[j+1] = tmp;
-            }
-        }
-    }
+   var swaped:Boolean
+   var start = 0;
+   var end = a.size - 1
+   do {
+       swaped = false
+       for(i in (start + 1)..end) {
+           if(a[i-1] > a[i]) {
+               var tmp = a[i-1]
+               a[i-1] = a[i]
+               a[i] = tmp
+               swaped = true
+           }
+       }
+       if (swaped) swaped = false
+       else break
+       for(i in end downTo start + 1) {
+           if(a[i-1] > a[i]) {
+               var tmp = a[i-1]
+               a[i-1] = a[i]
+               a[i] = tmp
+               swaped = true
+           }
+       }
+       start++
+       end--
+   } while(swaped)
 }
 
 fun main(args: Array<String>) {
     println("------------------");
-    println("Bubble sort test")
+    println("Cocketail shaker sort test")
     println("small random")
     testArraySort(Random().ints(50, 0, 50).toArray())
     println("small sorted")
@@ -43,7 +60,7 @@ fun testArraySort(a: IntArray) {
     time = System.currentTimeMillis() - time
     println("Sorted " + a.size + " items in " + time + "ms")
     val sorted = Arrays.copyOf(a, a.size)
-    Arrays.sort(sorted)
+    Arrays.sort(sorted);
     println("Validation: " +
         if(Arrays.equals(a, sorted)) "SUCCESS" else "FAILED")
 }
