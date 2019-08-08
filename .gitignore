@@ -1,3 +1,4 @@
+# Generated compiler outputs
 *.class
 tmp.*
 *.swp
@@ -5,19 +6,13 @@ tmp.*
 *.o
 *.hi
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.ear
-
-# other
+# IDE 
 .idea/**
 .gradle/**
 build/**
 out/**
+tmp/**
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Other
 hs_err_pid*
+.DS_Store
