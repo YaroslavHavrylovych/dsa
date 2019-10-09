@@ -1,35 +1,43 @@
 #!/bin/bash
 
 echo "Kotlin tests"
-cd scripts/
+if ! [[ $(pwd) == *"scripts" ]]; then
+    #if we build from the parent directory (the common case)
+    cd scripts
+fi
 ./clean.sh
-echo "copying files..."
 cd ..
-mkdir -p out/kotlin
-find algorithms/ -name *.kt -exec cp {} out/kotlin \;
 
 key=$1
 if [[ ! $key ]]; then
-    key="*"
+    key="kotlin"
 else
     key="*$key*"
-fi
 echo "The file template: $key"
+fi
 
-echo "building..."
+mkdir -p out/kotlin
 cd out/kotlin
-for FILE_FULL_NAME in *.kt; do
-    if [[ $FILE_FULL_NAME == *$key* ]]; then
-        FILENAME="${FILE_FULL_NAME%%.*}"
-        kotlinc $FILE_FULL_NAME -include-runtime -d $FILENAME.jar -jvm-target 1.8
-    fi
-done
+find  ../../algorithms/ -type d -iname "kotlin" | grep "kotlin" \
+    | while read FILES_PATH; do
 
-echo "running..."
-for FILE_FULL_NAME in *.jar; do
-    if [[ $FILE_FULL_NAME == *$key* ]]; then
-        java -jar $FILE_FULL_NAME
-    fi
+    #creating a build dir
+    #the last (-1) folder is "kotlin", and (-2) - an algorithm's name
+    IFS='/' read -ra ADDR <<< "$FILES_PATH"
+    FOLDER_NAME="${ADDR[${#ADDR[*]}-2]}"
+    mkdir "$FOLDER_NAME"
+    cp $FILES_PATH/*.kt "$FOLDER_NAME"
+    cd $FOLDER_NAME
+
+    echo "building $FOLDER_NAME"
+    kotlinc -include-runtime  -d Test.jar -jvm-target 1.8 *.kt
+    echo "done"
+
+    echo "running $FOLDER_NAME"
+    java -jar Test.jar
+    echo "done"
+
+    cd ..
 done
 cd ../../scripts
 

@@ -1,37 +1,44 @@
 #!/bin/bash
 
 echo "Java tests"
-cd scripts/
-./clean.sh
-echo "copying files..."
-cd ..
-mkdir -p out/java
-find algorithms/ -name *.java -exec cp {} out/java \;
-
-key=$1
-if [[ ! $key ]]; then
-    key="*"
-else
-    key="*$key*"
+if ! [[ $(pwd) == *"scripts" ]]; then
+    #if we build from the parent directory (the common case)
+    cd scripts
 fi
-echo "The file template: $key"
+./clean.sh
+cd ..
 
-echo "building..."
+
+KEY=$1
+if [[ ! $KEY ]]; then
+    KEY="java"
+else
+    KEY="*$KEY*"
+    echo "The file template: $KEY"
+fi
+
+mkdir -p out/java
 cd out/java
-for FILE_FULL_NAME in *.java; do
-    if [[ $FILE_FULL_NAME == $key ]]; then
-        javac $FILE_FULL_NAME
-    fi
-done
+find ../../algorithms/ -type d -iname "${KEY}" | grep "java" \
+    | while read FILES_PATH; do
 
-echo "running..."
-for FILE_FULL_NAME in *.java; do
-    if grep -q "public static void main" "$FILE_FULL_NAME"; then
-        if [[ $FILE_FULL_NAME == $key ]]; then
-            FILENAME="${FILE_FULL_NAME%%.*}"
-            java $FILENAME
-        fi
-    fi
+    #creating a build dir
+    #the last (-1) folder is "java", and (-2) - an algorithm's name
+    IFS='/' read -ra ADDR <<< "$FILES_PATH"
+    FOLDER_NAME="${ADDR[${#ADDR[*]}-2]}"
+    mkdir "$FOLDER_NAME"
+    cp $FILES_PATH/*.java "$FOLDER_NAME"
+    cd $FOLDER_NAME
+
+    echo "building $FOLDER_NAME"
+    javac *.java
+    echo "done"
+
+    echo "running $FOLDER_NAME"
+    java Test
+    echo "done"
+
+    cd ..
 done
 cd ../../scripts
 

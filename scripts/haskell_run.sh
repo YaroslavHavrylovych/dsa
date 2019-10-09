@@ -1,36 +1,43 @@
 #!/bin/bash
 
 echo "Haskell tests"
-cd scripts/
+if ! [[ $(pwd) == *"scripts" ]]; then
+    #if we build from the parent directory (the common case)
+    cd scripts
+fi
 ./clean.sh
-echo "copying files..."
 cd ..
-mkdir -p out/haskell
-find algorithms/ -name *.hs -exec cp {} out/haskell \;
 
 key=$1
 if [[ ! $key ]]; then
-    key="*"
+    key="haskell"
 else
     key="*$key*"
+    echo "The file template: $key"
 fi
-echo "The file template: $key"
 
-echo "building..."
+mkdir -p out/haskell
 cd out/haskell
-for FILE_FULL_NAME in *.hs; do
-    if [[ $FILE_FULL_NAME == $key ]]; then
-        FILENAME="${FILE_FULL_NAME%%.*}"
-        ghc -o $FILENAME $FILE_FULL_NAME
-    fi
-done
+find  ../../algorithms/ -type d -iname "haskell" | grep "haskell" \
+    | while read FILES_PATH; do
 
-echo "running..."
-for FILE_FULL_NAME in *.hs; do
-    if [[ $FILE_FULL_NAME == $key ]]; then
-        FILENAME="${FILE_FULL_NAME%%.*}"
-        ./$FILENAME
-    fi
+    #creating a build dir
+    #the last (-1) folder is "haskell", and (-2) - an algorithm's name
+    IFS='/' read -ra ADDR <<< "$FILES_PATH"
+    FOLDER_NAME="${ADDR[${#ADDR[*]}-2]}"
+    mkdir "$FOLDER_NAME"
+    cp $FILES_PATH/*.hs "$FOLDER_NAME"
+    cd $FOLDER_NAME
+
+    echo "building $FOLDER_NAME"
+    ghc -o Test Test.hs     
+    echo "done"
+
+    echo "running $FOLDER_NAME"
+    ./Test
+    echo "done"
+
+    cd ..
 done
 cd ../../scripts
 
