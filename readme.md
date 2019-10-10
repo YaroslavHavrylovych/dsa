@@ -11,7 +11,7 @@ data structure or algorithms - please visit the corresponding sub-directory.
 The repo is not at its final stage, and a lot is still not done. If you want to check
 the progress, please visit the [trello](https://trello.com/b/TWRrtolV/dsa) board.
 
-# Data Structures
+## Data Structures
 
 [Data structure](https://en.wikipedia.org/wiki/Data_structure) -
  is a collection of data values, the relationships among them, and the functions or operations that can be applied to the data.
@@ -21,7 +21,6 @@ To understand this section, you have to know what is an
 [abstract data type](https://en.wikipedia.org/wiki/Abstract_data_type).
 
 * List
-* Map
 * Set
 * Associative array (Dictionary, Map)
 * Heap
@@ -34,7 +33,7 @@ To understand this section, you have to know what is an
 * Trie
 * Graph
 
-# Algorithms
+## Algorithms
 
 [Algorithm](https://en.wikipedia.org/wiki/Algorithm) -
 is a description of a sequence of steps/actions one must perform to solve a particular problem.
@@ -43,9 +42,9 @@ Exists a vast amount of methods to group algorithms. My way is based on
 [InterviewBit](https://www.interviewbit.com/courses/programming/)
 and [hackerrank](https://www.hackerrank.com/dashboard):
 
-* **Sort**
-  * Bubble Sort
-  * Cocktail Shaker Sort
+* **[Sort](algorithms/sort/)**
+  * [Bubble Sort](algorithms/sort/comparison/bubble/)
+  * [Cocktail Shaker Sort](algorithms/sort/comparison/cocktail_shaker/)
   * Insertion Sort
   * Selection Sort
   * Comb Sort
@@ -55,7 +54,7 @@ and [hackerrank](https://www.hackerrank.com/dashboard):
   * Count Sort
   * Radix Sort (Bucket, Digital)
 
-# Preparing for an interview?
+## Preparing for an interview?
 
 DSA is mostly recalled just before (or even at the time) an interview.
 If you have to prepare ASAP, I would suggest solving a few problems from each section
