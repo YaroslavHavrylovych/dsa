@@ -82,23 +82,23 @@
 
 _Java_
 
-збірка: javac \*.java
+збірка: `javac *.java`
 
-запуск: java filename
+запуск: `java filename`
 
 _Kotlin_
 
-збірка: kotlinc \*.kt -include-runtime -d output\_file.jar
+збірка: `kotlinc *.kt -include-runtime -d output_file.jar`
 
-запуск: java -jar output\_file.jar
+запуск: `java -jar output_file.jar`
 
 _Haskell_
 
-збірка: -o output\_file input\_file.hs
+збірка: `ghc -o output_file input_file.hs`
 
-запуск: ./output\_file
+запуск: `./output_file`
 
-_Гуртовий запуск_
+**Гуртовий запуск**
 
 Директорія *scripts*, із кореня проекту, містить:
 

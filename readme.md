@@ -77,23 +77,23 @@ etc.
 
 _Java_
 
-build: javac \*.java
+build: `javac *.java`
 
-run: java filename
+run: `java filename`
 
 _Kotlin_
 
-build: kotlinc \*.kt -include-runtime -d output\_file.jar
+build: `kotlinc *.kt -include-runtime -d output_file.jar`
 
-run: java -jar output\_file.jar
+run: `java -jar output_file.jar`
 
 _Haskell_
 
-build: -o output\_file input\_file.hs
+build: `ghc -o output_file input_file.hs`
 
-run: ./output\_file
+run: `./output_file`
 
-_Bulk_
+**Bulk**
 
 The *scripts* folder, from the root dir, contains:
 
