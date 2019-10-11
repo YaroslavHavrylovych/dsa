@@ -103,7 +103,7 @@ The *scripts* folder, from the root dir, contains:
 
 `haskell_run.sh` - build and run for all Haskell files.
 
-`clean.sh` - для очистки директорії збірки
+`clean.sh` - clean the output directory.
 
 Each script can have a single parameter which acts as a filter:
 
