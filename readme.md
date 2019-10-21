@@ -56,6 +56,8 @@ and [hackerrank](https://www.hackerrank.com/dashboard):
   * Heap Sort
   * Count Sort
   * Radix Sort (Bucket, Digital)
+* **Math**
+  * [Exponentiation by squaring](algorithms/math/exponentiation_by_squaring/readme.md)
 
 ## Preparing for an interview?
 

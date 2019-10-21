@@ -12,13 +12,13 @@ key=$1
 if [[ ! $key ]]; then
     key="kotlin"
 else
-    key="*$key*"
+    key="$key"
 echo "The file template: $key"
 fi
 
 mkdir -p out/kotlin
 cd out/kotlin
-find  ../../algorithms/ -type d -iname "kotlin" | grep "kotlin" \
+find  ../../algorithms/ -type d -iname "kotlin" | grep "$key" \
     | while read FILES_PATH; do
 
     #creating a build dir

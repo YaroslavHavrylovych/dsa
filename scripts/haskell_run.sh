@@ -12,13 +12,13 @@ key=$1
 if [[ ! $key ]]; then
     key="haskell"
 else
-    key="*$key*"
+    key="$key"
     echo "The file template: $key"
 fi
 
 mkdir -p out/haskell
 cd out/haskell
-find  ../../algorithms/ -type d -iname "haskell" | grep "haskell" \
+find  ../../algorithms/ -type d -iname "haskell" | grep "${key}" \
     | while read FILES_PATH; do
 
     #creating a build dir
