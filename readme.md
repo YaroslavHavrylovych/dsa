@@ -1,7 +1,7 @@
 # Data Structures and Algorithms (DSA) 
 
 [![Build Status](https://travis-ci.org/YaroslavHavrylovych/dsa.svg?branch=development)](https://travis-ci.org/YaroslavHavrylovych/dsa)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 *Read in [Українська](README-UK.md)*
 
