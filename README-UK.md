@@ -1,6 +1,7 @@
 # Структури Даних і Алгоритми (СДА) 
 
 [![Build Status](https://travis-ci.org/YaroslavHavrylovych/dsa.svg?branch=development)](https://travis-ci.org/YaroslavHavrylovych/dsa)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 *Читати [English](README.md)*
 
